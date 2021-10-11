@@ -33,15 +33,23 @@
         android:layout_height="wrap_content"
         android:hint="Enter the location"
         android:id="@+id/etLocation"/>
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+    <ImageView
+        android:src="@drawable/save"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:id="@+id/btSave"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View"
+    <ImageView
+        android:layout_marginLeft="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/view"
         android:id="@+id/btView"
         />
+    </LinearLayout>
 </LinearLayout>

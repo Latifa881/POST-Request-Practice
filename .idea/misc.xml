@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Latifah/Desktop/Coding dojo/POSTRequestPractice/app/src/main/res/drawable-v24/round_layout.xml" value="0.21574074074074073" />
+        <entry key="..\:/Users/Latifah/Desktop/Coding dojo/POSTRequestPractice/app/src/main/res/drawable/add.xml" value="0.24375" />
         <entry key="..\:/Users/Latifah/Desktop/Coding dojo/POSTRequestPractice/app/src/main/res/layout/activity_add_details.xml" value="0.2234375" />
         <entry key="..\:/Users/Latifah/Desktop/Coding dojo/POSTRequestPractice/app/src/main/res/layout/activity_main.xml" value="0.20625" />
         <entry key="..\:/Users/Latifah/Desktop/Coding dojo/POSTRequestPractice/app/src/main/res/layout/item_row.xml" value="0.2234375" />
+        <entry key="..\:/Users/Latifah/Desktop/Coding dojo/POSTRequestPractice/app/src/main/res/layout/login_dialog.xml" value="0.1824074074074074" />
+        <entry key="..\:/Users/Latifah/Desktop/Coding dojo/POSTRequestPractice/app/src/main/res/menu/main_menu.xml" value="0.1824074074074074" />
       </map>
     </option>
   </component>

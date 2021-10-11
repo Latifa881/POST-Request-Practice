@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,8 +14,8 @@ import retrofit2.Response
 class AddDetailsActivity : AppCompatActivity() {
     lateinit var etName: EditText
     lateinit var etLocation: EditText
-    lateinit var btSave: Button
-    lateinit var btView: Button
+    lateinit var btSave: ImageView
+    lateinit var btView: ImageView
     var name: String = ""
     var location: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +47,7 @@ class AddDetailsActivity : AppCompatActivity() {
     fun addDetails() {
         val apiInterface = APIClient().getClient()?.create(APIInterface::class.java)
         if (apiInterface != null) {
-            apiInterface.addDetails(Details.UserDetails(name, location))
+            apiInterface.addUserDetails(Details.UserDetails( location,name))
                 .enqueue(object : Callback<List<Details.UserDetails>> {
                     override fun onResponse(
                         call: Call<List<Details.UserDetails>>,
