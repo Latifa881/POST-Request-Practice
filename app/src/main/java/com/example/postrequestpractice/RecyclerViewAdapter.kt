@@ -69,9 +69,6 @@ class RecyclerViewAdapter(val detailsInfo: ArrayList<Details.UserDetails>,val co
             }
         }
 
-
-
-
     override fun getItemCount() = detailsInfo.size
 
 
