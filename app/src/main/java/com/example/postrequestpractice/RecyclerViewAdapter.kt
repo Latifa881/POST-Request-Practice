@@ -43,12 +43,34 @@ class RecyclerViewAdapter(val detailsInfo: ArrayList<Details.UserDetails>,val co
                 customAlertDialog(data.id!!,data.location!!,data.name!!)
             }
             ivDelete.setOnClickListener {
-                delete(data.id.toString().toInt())
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Deleting User Details")
+                //set message for alert dialog
+                builder.setMessage("Are you sure you want to delete this user?")
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+                //performing positive action
+                builder.setPositiveButton("Delete"){dialogInterface, which ->
+                    delete(data.id.toString().toInt())
+                }
+                //performing cancel action
+                builder.setNeutralButton("Cancel"){dialogInterface , which ->
+                    dialogInterface.cancel()
+                }
+
+                // Create the AlertDialog
+                val alertDialog: AlertDialog = builder.create()
+                // Set other dialog properties
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+            }
+
+
             }
         }
 
 
-    }
+
 
     override fun getItemCount() = detailsInfo.size
 
