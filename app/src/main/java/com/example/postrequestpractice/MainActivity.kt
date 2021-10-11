@@ -14,15 +14,12 @@ import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var btAddNewUser: ImageView
-    lateinit var btRefresh: ImageView
     lateinit var rvMain: RecyclerView
     val detailsInfo = arrayListOf<Details.UserDetails>()
     val searchArray = arrayListOf<Details.UserDetails>()
@@ -30,28 +27,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btAddNewUser = findViewById(R.id.btAddNewUser)
-        btRefresh = findViewById(R.id.btRefresh)
         rvMain = findViewById(R.id.rvMain)
         //RecyclerView
         //  rvMain.adapter = RecyclerViewAdapter(detailsInfo,this)
         rvMain.adapter = RecyclerViewAdapter(searchArray, this)
         rvMain.layoutManager = LinearLayoutManager(applicationContext)
-        btAddNewUser.setOnClickListener {
-
-            val intent = Intent(this, AddDetailsActivity::class.java)
-            startActivity(intent)
-        }
-        btRefresh.setOnClickListener {
-            rvMain.adapter!!.notifyDataSetChanged()
-            this.recreate()
-        }
         getDetails()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         val menuItem = menu?.findItem(R.id.search_action)
+
         if (menuItem != null) {
             val searchItem = menuItem.actionView as SearchView
             searchItem.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -81,6 +68,20 @@ class MainActivity : AppCompatActivity() {
             })
         }
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if(item.getItemId()==R.id.addNewUser){
+            val intent = Intent(this, AddDetailsActivity::class.java)
+            startActivity(intent)
+        }
+        if(item.getItemId()==R.id.refresh){
+                rvMain.adapter!!.notifyDataSetChanged()
+                this.recreate()
+
+            }
+        return super.onOptionsItemSelected(item)
     }
 
     fun getDetails() {
