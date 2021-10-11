@@ -62,6 +62,7 @@ class RecyclerViewAdapter(val detailsInfo: ArrayList<Details.UserDetails>,val co
                     response: Response<Details.UserDetails>
                 ) {
                     Toast.makeText(context,"Updated successfully!",Toast.LENGTH_SHORT).show()
+                    notifyDataSetChanged()
                 }
 
                 override fun onFailure(call: Call<Details.UserDetails>, t: Throwable) {
@@ -76,6 +77,7 @@ class RecyclerViewAdapter(val detailsInfo: ArrayList<Details.UserDetails>,val co
         apiInterface?.deleteUserDetails(id)?.enqueue(   object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 Toast.makeText(context,"Deleted successfully!",Toast.LENGTH_SHORT).show()
+                notifyDataSetChanged()
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
@@ -89,7 +91,7 @@ class RecyclerViewAdapter(val detailsInfo: ArrayList<Details.UserDetails>,val co
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(context)
             .setView(DialogView)
-            .setTitle("Login Form")
+
         //show dialog
         val  mAlertDialog = mBuilder.show()
         DialogView.etID.setText(id.toString())
