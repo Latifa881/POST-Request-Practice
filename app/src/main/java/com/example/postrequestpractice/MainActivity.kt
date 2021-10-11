@@ -50,43 +50,69 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+        val menuItem=menu?.findItem(R.id.search_action)
+        if(menuItem!=null){
+            val searchItem=menuItem.actionView as SearchView
+            searchItem.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if(newText!!.isNotEmpty()){
+                        searchArray.clear()
+                        val search=newText!!.toLowerCase(Locale.getDefault())
+                        detailsInfo.forEach {
+                            if(it.location?.toLowerCase(Locale.getDefault()).toString().contains(search)){
+                                searchArray.add(it)
+                            }
+                        }
+                        rvMain.adapter!!.notifyDataSetChanged()
+                    }else{
+                        searchArray.clear()
+                        searchArray.addAll(detailsInfo)
+                        rvMain.adapter!!.notifyDataSetChanged()
+                    }
+                    return true
+                }
+            })
+        }
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val searchView=item?.actionView as SearchView
 
-        when(item.itemId){
-            R.id.search_action -> {
-                searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        TODO("Not yet implemented")
-                    }
-
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                    Log.d("TAG","Here")
-                        searchArray.clear()
-                        val searchText=newText!!.toLowerCase(Locale.getDefault())
-                        if(searchText.isNotEmpty()){
-                            for(x in detailsInfo){
-                                if(x.location?.toLowerCase(Locale.getDefault()).toString().contains(searchText)){
-                                    searchArray.add(x)
-                                }
-                            }
-                            rvMain.adapter!!.notifyDataSetChanged()
-                        }else{
-                            searchArray.clear()
-                            searchArray.addAll(detailsInfo)
-                            rvMain.adapter!!.notifyDataSetChanged()
-
-                        }
-                        return false
-                    }
-
-                })
-
-                return true
-            }
-        }
+//        when(item.itemId){
+//            R.id.search_action -> {
+//                searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+//                    override fun onQueryTextSubmit(query: String?): Boolean {
+//                        TODO("Not yet implemented")
+//                    }
+//
+//                    override fun onQueryTextChange(newText: String?): Boolean {
+//                    Log.d("TAG","Here")
+//                        searchArray.clear()
+//                        val searchText=newText!!.toLowerCase(Locale.getDefault())
+//                        if(searchText.isNotEmpty()){
+//                            for(x in detailsInfo){
+//                                if(x.location?.toLowerCase(Locale.getDefault()).toString().contains(searchText)){
+//                                    searchArray.add(x)
+//                                }
+//                            }
+//                            rvMain.adapter!!.notifyDataSetChanged()
+//                        }else{
+//                            searchArray.clear()
+//                            searchArray.addAll(detailsInfo)
+//                            rvMain.adapter!!.notifyDataSetChanged()
+//
+//                        }
+//                        return false
+//                    }
+//
+//                })
+//
+//                return true
+//            }
+//        }
         return super.onOptionsItemSelected(item)
     }
     fun getDetails() {
@@ -110,8 +136,8 @@ class MainActivity : AppCompatActivity() {
                         val id=User.id
                         detailsInfo.add(Details.UserDetails(location,name,id))
                     }
-                    rvMain.adapter!!.notifyDataSetChanged()
                     searchArray.addAll(detailsInfo)
+                    rvMain.adapter!!.notifyDataSetChanged()
 
                 }
 
