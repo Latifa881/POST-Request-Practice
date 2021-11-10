@@ -21,8 +21,8 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var rvMain: RecyclerView
-    val detailsInfo = arrayListOf<Details.UserDetails>()
-    val searchArray = arrayListOf<Details.UserDetails>()
+    val detailsInfo = arrayListOf<UserDetailsItem>()
+    val searchArray = arrayListOf<UserDetailsItem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -92,25 +92,25 @@ class MainActivity : AppCompatActivity() {
         val apiInterface = APIClient().getClient()?.create(APIInterface::class.java)
 
         if (apiInterface != null) {
-            apiInterface.getUserDetails()?.enqueue(object : Callback<List<Details.UserDetails>> {
+            apiInterface.getUserDetails()?.enqueue(object : Callback<UserDetails> {
                 override fun onResponse(
-                    call: Call<List<Details.UserDetails>>,
-                    response: Response<List<Details.UserDetails>>
+                    call: Call<UserDetails>,
+                    response: Response<UserDetails>
                 ) {
                     progressDialog.dismiss()
                     Log.d("TAG", response.code().toString() + "")
                     for (User in response.body()!!) {
                         val name = User.name
                         val location = User.location
-                        val id = User.id
-                        detailsInfo.add(Details.UserDetails(location, name, id))
+                        val id = User.pk
+                        detailsInfo.add(UserDetailsItem(location, name, id))
                     }
                     searchArray.addAll(detailsInfo)
                     rvMain.adapter!!.notifyDataSetChanged()
 
                 }
 
-                override fun onFailure(call: Call<List<Details.UserDetails>>, t: Throwable) {
+                override fun onFailure(call: Call<UserDetails>, t: Throwable) {
                     // Toast.makeText(applicationContext, ""+t.message, Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss()
                     call.cancel()

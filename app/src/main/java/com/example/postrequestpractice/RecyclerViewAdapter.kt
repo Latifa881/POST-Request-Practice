@@ -18,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RecyclerViewAdapter(val detailsInfo: ArrayList<Details.UserDetails>,val context: Context) :
+class RecyclerViewAdapter(val detailsInfo: ArrayList<UserDetailsItem>,val context: Context) :
     RecyclerView.Adapter<RecyclerViewAdapter.ItemViewHolder>() {
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -38,9 +38,9 @@ class RecyclerViewAdapter(val detailsInfo: ArrayList<Details.UserDetails>,val co
         holder.itemView.apply {
             tvName.text = data.name
             tvLocation.text = data.location
-            tvID.text = data.id.toString()
+            tvID.text = data.pk.toString()
             ivUpdate.setOnClickListener {
-                customAlertDialog(data.id!!,data.location!!,data.name!!)
+                customAlertDialog(data.pk!!,data.location!!,data.name!!)
             }
             ivDelete.setOnClickListener {
                 val builder = AlertDialog.Builder(context)
@@ -51,7 +51,7 @@ class RecyclerViewAdapter(val detailsInfo: ArrayList<Details.UserDetails>,val co
 
                 //performing positive action
                 builder.setPositiveButton("Delete"){dialogInterface, which ->
-                    delete(data.id.toString().toInt())
+                    delete(data.pk.toString().toInt())
                 }
                 //performing cancel action
                 builder.setNeutralButton("Cancel"){dialogInterface , which ->
@@ -74,17 +74,17 @@ class RecyclerViewAdapter(val detailsInfo: ArrayList<Details.UserDetails>,val co
 
     fun update(id: Int, location: String, name: String) {
         val apiInterface = APIClient().getClient()?.create(APIInterface::class.java)
-        apiInterface?.updateUserDetails(id, Details.UserDetails(location, name, id))?.enqueue(
-            object : Callback<Details.UserDetails> {
+        apiInterface?.updateUserDetails(id, UserDetailsItem(location, name, id))?.enqueue(
+            object : Callback<UserDetailsItem> {
                 override fun onResponse(
-                    call: Call<Details.UserDetails>,
-                    response: Response<Details.UserDetails>
+                    call: Call<UserDetailsItem>,
+                    response: Response<UserDetailsItem>
                 ) {
                     Toast.makeText(context,"Updated successfully!",Toast.LENGTH_SHORT).show()
                     notifyDataSetChanged()
                 }
 
-                override fun onFailure(call: Call<Details.UserDetails>, t: Throwable) {
+                override fun onFailure(call: Call<UserDetailsItem>, t: Throwable) {
                     Toast.makeText(context,"Updated failed!",Toast.LENGTH_SHORT).show()
                 }
             })

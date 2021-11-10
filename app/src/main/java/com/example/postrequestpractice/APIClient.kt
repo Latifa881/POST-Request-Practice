@@ -13,7 +13,7 @@ class APIClient {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
         retrofit = Retrofit.Builder()
-            .baseUrl("https://dojo-recipes.herokuapp.com/")
+            .baseUrl("https://dojo-recipes.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

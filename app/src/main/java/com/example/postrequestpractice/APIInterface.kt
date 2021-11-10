@@ -6,15 +6,15 @@ import retrofit2.http.*
 interface APIInterface {
     @Headers("Content-Type: application/json")
     @GET("/test/")
-    fun getUserDetails():  Call<List<Details.UserDetails>>
+    fun getUserDetails():  Call<UserDetails>
 
     @Headers("Content-Type: application/json")
     @POST("/test/")
-    fun addUserDetails(@Body details: Details.UserDetails): Call<List<Details.UserDetails>>
+    fun addUserDetails(@Body details: UserDetailsItem): Call<UserDetailsItem>
 
     @Headers("Content-Type: application/json")
     @PUT("/test/{id}")
-    fun updateUserDetails(@Path("id")id:Int,@Body details: Details.UserDetails): Call<Details.UserDetails>
+    fun updateUserDetails(@Path("id")id:Int,@Body details: UserDetailsItem): Call<UserDetailsItem>
 
     @Headers("Content-Type: application/json")
     @DELETE("/test/{id}")
